@@ -1,0 +1,39 @@
+name: CI tests for python3.7
+on:
+  workflow_dispatch:
+    branches:
+      - '**'
+  push:
+    branches:
+      - '**'
+    paths-ignore:
+      - '**.md'
+      - '**.ipynb'
+
+jobs:
+  test_algo:
+    runs-on: ubuntu-20.04
+    container:
+      image: python:3.7
+      options: --shm-size 4g
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: Poetry install
+        run: |
+          curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.4.0 python3 -
+      - name: Install poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | POETRY_VERSION=1.4.0 python3 -
+          pip install --upgrade pip
+          export PATH=/github/home/.local/bin:$PATH
+          poetry install --no-root
+      - name: Lint with flake8
+        run: |
+          pflake8 --version
+          isort --version
+          pflake8 --count --show-source --statistics
+      - name: Unittests
+        run: |
+          python scripts/test.py
