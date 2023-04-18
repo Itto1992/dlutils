@@ -1,0 +1,11 @@
+version: "3"
+services:
+  dlutils: 
+    build:
+      context: .
+    command: /bin/bash
+    image: dlutils
+    shm_size: 8g
+    volumes:
+      - .:/root/workspace
+    working_dir: /root/workspace
