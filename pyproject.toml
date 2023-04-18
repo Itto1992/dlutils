@@ -27,7 +27,6 @@ jupyter = "*"
 jupyterlab = "*"
 pep8-naming = "*"
 pyproject-flake8 = "*"
-youtube-dl = "*"
 
 [tool.isort]
 include_trailing_comma = true
